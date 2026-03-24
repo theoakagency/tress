@@ -1,17 +1,1722 @@
-johnrobles@John-Macbook-14 tress % git add .
-git commit -m "Fix photo crops"       
-git push origin main
-On branch main
-Your branch is up to date with 'origin/main'.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tress Larson — International Speaker & Leadership Coach</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-nothing to commit, working tree clean
-Everything up-to-date
-johnrobles@John-Macbook-14 tress % git add .
-git commit -m "Fix photo crops"
-git push origin main
-On branch main
-Your branch is up to date with 'origin/main'.
+  :root {
+    --ocean: #1a3a4a;
+    --ocean-deep: #0f2535;
+    --ocean-mid: #2a5068;
+    --sage: #7a9e8e;
+    --sage-light: #a8c4b8;
+    --sage-pale: #d4e6df;
+    --beige: #f0ebe2;
+    --beige-warm: #e8e0d2;
+    --cream: #faf8f4;
+    --gold: #c5a46a;
+    --gold-light: #dfc08a;
+    --text-dark: #1c2b34;
+    --text-mid: #4a6070;
+    --text-light: #7a9aaa;
+  }
 
-nothing to commit, working tree clean
-Everything up-to-date
-johnrobles@John-Macbook-14 tress % 
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Jost', sans-serif;
+    background: var(--cream);
+    color: var(--text-dark);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 22px 48px;
+    background: rgba(250,248,244,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(122,158,142,0.2);
+    transition: all 0.3s ease;
+  }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--ocean);
+    text-decoration: none;
+  }
+
+  .nav-logo span { color: var(--sage); font-style: italic; }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--ocean); }
+
+  .nav-cta {
+    background: var(--ocean);
+    color: var(--cream) !important;
+    padding: 10px 22px;
+    border-radius: 30px;
+    transition: background 0.2s !important;
+  }
+
+  .nav-cta:hover { background: var(--ocean-mid) !important; color: var(--cream) !important; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    background: var(--ocean-deep);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 64px 80px 72px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left::before {
+    content: '';
+    position: absolute;
+    top: -100px; right: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(122,158,142,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-left::after {
+    content: '';
+    position: absolute;
+    bottom: -80px; left: -60px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(197,164,106,0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-tag {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+
+  .hero-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 4.5vw, 5rem);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--cream);
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .hero-sub {
+    font-size: 1.05rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(212,230,223,0.8);
+    max-width: 420px;
+    margin-bottom: 48px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 0.8s forwards;
+  }
+
+  .btn-primary {
+    background: var(--gold);
+    color: var(--ocean-deep);
+    padding: 16px 36px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(197,164,106,0.35);
+  }
+
+  .btn-ghost {
+    border: 1px solid rgba(212,230,223,0.4);
+    color: var(--sage-pale);
+    padding: 16px 36px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-ghost:hover {
+    border-color: var(--sage-light);
+    color: var(--cream);
+    background: rgba(122,158,142,0.1);
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 40px;
+    margin-top: 64px;
+    padding-top: 40px;
+    border-top: 1px solid rgba(122,158,142,0.2);
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1s forwards;
+  }
+
+  .stat-item {}
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--gold-light);
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.12em;
+    color: var(--sage-light);
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .hero-right {
+    position: relative;
+    background: var(--beige);
+    overflow: hidden;
+  }
+
+  .hero-photo-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--beige-warm) 0%, var(--sage-pale) 50%, var(--beige) 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding-bottom: 48px;
+    position: relative;
+  }
+
+  /* Decorative botanical-style SVG overlay */
+  .hero-decor {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    opacity: 0.06;
+  }
+
+  .hero-photo-frame {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse at 60% 30%, rgba(122,158,142,0.25) 0%, transparent 60%),
+      radial-gradient(ellipse at 30% 80%, rgba(197,164,106,0.15) 0%, transparent 50%);
+  }
+
+  /* Large decorative initial */
+  .hero-initial {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40vw;
+    font-weight: 300;
+    color: rgba(122,158,142,0.08);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .hero-quote-card {
+    position: relative;
+    z-index: 2;
+    background: white;
+    border-radius: 16px;
+    padding: 28px 32px;
+    max-width: 320px;
+    box-shadow: 0 20px 60px rgba(26,58,74,0.12);
+    text-align: center;
+    margin: 0 32px;
+    animation: fadeUp 1s ease 1.2s both;
+  }
+
+  .quote-mark {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    color: var(--sage);
+    line-height: 0.6;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .hero-quote-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--ocean);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .hero-quote-attr {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage);
+    font-weight: 500;
+  }
+
+  /* PRESS LOGOS */
+  #press {
+    background: var(--ocean);
+    padding: 32px 72px;
+    display: flex;
+    align-items: center;
+    gap: 60px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .press-label {
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    white-space: nowrap;
+  }
+
+  .press-items {
+    display: flex;
+    align-items: center;
+    gap: 48px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .press-item {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: rgba(212,230,223,0.5);
+    text-transform: uppercase;
+  }
+
+  /* ABOUT */
+  #about {
+    padding: 120px 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    background: var(--cream);
+  }
+
+  .about-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 20px;
+  }
+
+  .about-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.2rem, 3vw, 3.2rem);
+    font-weight: 300;
+    line-height: 1.2;
+    color: var(--ocean-deep);
+    margin-bottom: 32px;
+  }
+
+  .about-headline em { font-style: italic; color: var(--sage); }
+
+  .about-body {
+    font-size: 1rem;
+    font-weight: 300;
+    line-height: 1.85;
+    color: var(--text-mid);
+    margin-bottom: 20px;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-card-main {
+    background: var(--ocean-deep);
+    border-radius: 24px;
+    padding: 48px;
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-card-main::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(197,164,106,0.2) 0%, transparent 70%);
+  }
+
+  .about-card-main::after {
+    content: '';
+    position: absolute;
+    bottom: -40px; left: -40px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(122,158,142,0.15) 0%, transparent 70%);
+  }
+
+  .about-card-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--cream);
+    position: relative;
+    z-index: 1;
+    margin-bottom: 24px;
+  }
+
+  .about-card-quote::before {
+    content: '"';
+    font-size: 4rem;
+    color: var(--gold);
+    line-height: 0;
+    vertical-align: -1rem;
+    margin-right: 4px;
+  }
+
+  .about-card-name {
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    font-weight: 500;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-badges {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    background: var(--beige-warm);
+    border: 1px solid rgba(122,158,142,0.3);
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-size: 0.7rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    color: var(--ocean);
+    text-transform: uppercase;
+  }
+
+  .floating-card {
+    position: absolute;
+    bottom: -24px;
+    right: -24px;
+    background: var(--cream);
+    border-radius: 16px;
+    padding: 20px 24px;
+    box-shadow: 0 16px 40px rgba(26,58,74,0.12);
+    min-width: 200px;
+  }
+
+  .floating-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.8rem;
+    font-weight: 300;
+    color: var(--ocean);
+    line-height: 1;
+  }
+
+  .floating-label {
+    font-size: 0.68rem;
+    font-weight: 400;
+    color: var(--sage);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  /* KEYNOTES */
+  #keynotes {
+    background: var(--beige);
+    padding: 120px 72px;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 72px;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 3vw, 3rem);
+    font-weight: 300;
+    color: var(--ocean-deep);
+    line-height: 1.2;
+  }
+
+  .section-title em { font-style: italic; color: var(--sage); }
+
+  .keynotes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .keynote-card {
+    background: white;
+    border-radius: 20px;
+    padding: 40px 32px;
+    border: 1px solid rgba(122,158,142,0.15);
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .keynote-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 60px rgba(26,58,74,0.1);
+    border-color: var(--sage-light);
+  }
+
+  .keynote-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3.5rem;
+    font-weight: 300;
+    color: rgba(122,158,142,0.25);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .keynote-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--ocean);
+    line-height: 1.3;
+    margin-bottom: 16px;
+  }
+
+  .keynote-desc {
+    font-size: 0.88rem;
+    font-weight: 300;
+    line-height: 1.7;
+    color: var(--text-mid);
+  }
+
+  .keynote-card.featured {
+    background: var(--ocean-deep);
+    border-color: transparent;
+    grid-row: span 1;
+  }
+
+  .keynote-card.featured .keynote-num { color: rgba(197,164,106,0.3); }
+  .keynote-card.featured .keynote-title { color: var(--cream); }
+  .keynote-card.featured .keynote-desc { color: rgba(212,230,223,0.7); }
+
+  /* OUTCOMES */
+  #outcomes {
+    background: var(--cream);
+    padding: 120px 72px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+  }
+
+  .outcomes-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 40px;
+  }
+
+  .outcome-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 20px 24px;
+    border-radius: 12px;
+    border: 1px solid rgba(122,158,142,0.15);
+    background: white;
+    transition: all 0.2s;
+  }
+
+  .outcome-item:hover {
+    border-color: var(--sage-light);
+    box-shadow: 0 8px 24px rgba(26,58,74,0.06);
+  }
+
+  .outcome-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--sage);
+    margin-top: 7px;
+    flex-shrink: 0;
+  }
+
+  .outcome-text {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text-mid);
+    line-height: 1.5;
+  }
+
+  .outcomes-visual {
+    background: var(--ocean-deep);
+    border-radius: 24px;
+    padding: 56px 48px;
+    color: var(--cream);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .outcomes-visual::before {
+    content: '';
+    position: absolute;
+    top: -80px; left: -80px;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(122,158,142,0.2) 0%, transparent 70%);
+  }
+
+  .outcomes-visual-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2rem;
+    font-weight: 300;
+    line-height: 1.3;
+    margin-bottom: 32px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .outcomes-visual-title em { font-style: italic; color: var(--gold-light); }
+
+  .outcomes-grid-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .outcome-mini {
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px 18px;
+    border: 1px solid rgba(122,158,142,0.2);
+  }
+
+  .outcome-mini-icon {
+    font-size: 1.4rem;
+    margin-bottom: 10px;
+  }
+
+  .outcome-mini-text {
+    font-size: 0.82rem;
+    font-weight: 300;
+    line-height: 1.5;
+    color: rgba(212,230,223,0.8);
+  }
+
+  /* TESTIMONIALS */
+  #testimonials {
+    background: var(--sage-pale);
+    padding: 120px 72px;
+  }
+
+  .testimonials-track {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    margin-top: 64px;
+  }
+
+  .testimonial-card {
+    background: white;
+    border-radius: 20px;
+    padding: 36px 32px;
+    position: relative;
+  }
+
+  .t-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    color: var(--sage-light);
+    line-height: 0.5;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .t-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-style: italic;
+    font-weight: 400;
+    line-height: 1.65;
+    color: var(--ocean);
+    margin-bottom: 24px;
+  }
+
+  .t-name {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ocean-mid);
+  }
+
+  .t-role {
+    font-size: 0.7rem;
+    font-weight: 300;
+    color: var(--sage);
+    margin-top: 2px;
+  }
+
+  .testimonial-card.featured {
+    background: var(--ocean);
+    grid-column: 2;
+  }
+
+  .testimonial-card.featured .t-text { color: var(--cream); }
+  .testimonial-card.featured .t-name { color: var(--sage-pale); }
+  .testimonial-card.featured .t-role { color: var(--sage-light); }
+  .testimonial-card.featured .t-quote { color: var(--gold); }
+
+  /* CTA */
+  #cta {
+    background: var(--ocean-deep);
+    padding: 120px 72px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #cta::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(122,158,142,0.12) 0%, transparent 70%);
+  }
+
+  .cta-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    margin-bottom: 24px;
+    display: block;
+    position: relative;
+  }
+
+  .cta-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 28px;
+    position: relative;
+  }
+
+  .cta-headline em { font-style: italic; color: var(--gold-light); }
+
+  .cta-sub {
+    font-size: 1rem;
+    font-weight: 300;
+    color: rgba(212,230,223,0.7);
+    max-width: 480px;
+    margin: 0 auto 48px;
+    line-height: 1.7;
+    position: relative;
+  }
+
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-gold {
+    background: var(--gold);
+    color: var(--ocean-deep);
+    padding: 18px 44px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-gold:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+    box-shadow: 0 16px 40px rgba(197,164,106,0.3);
+  }
+
+  .btn-outline-cream {
+    border: 1px solid rgba(212,230,223,0.4);
+    color: var(--cream);
+    padding: 18px 44px;
+    border-radius: 40px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+
+  .btn-outline-cream:hover {
+    background: rgba(255,255,255,0.08);
+    border-color: var(--sage-light);
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--ocean-deep);
+    border-top: 1px solid rgba(122,158,142,0.15);
+    padding: 48px 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--cream);
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+
+  .footer-logo span { color: var(--sage-light); font-style: italic; }
+
+  .footer-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(168,196,184,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--sage-light); }
+
+  .footer-ig {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.72rem;
+    color: rgba(168,196,184,0.6);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .footer-ig:hover { color: var(--sage-light); }
+
+  .footer-ig svg { width: 18px; height: 18px; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(32px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── TABLET: 768–1024px ── */
+  @media (max-width: 1024px) {
+    /* Nav */
+    nav { padding: 18px 32px; }
+    .nav-links { gap: 20px; }
+    .nav-links li:not(:last-child):nth-child(n+3) { display: none; } /* hide middle links, keep CTA */
+
+    /* Hero */
+    #hero { grid-template-columns: 1fr 1fr; min-height: auto; }
+    .hero-right { display: block; min-height: 500px; }
+    .hero-left { padding: 110px 40px 72px; }
+    .hero-headline { font-size: clamp(2.8rem, 6vw, 4rem); }
+    .hero-stats { gap: 28px; margin-top: 48px; padding-top: 32px; }
+
+    /* Press */
+    #press { padding: 24px 40px; gap: 20px; flex-wrap: wrap; justify-content: flex-start; }
+
+    /* About & Outcomes */
+    #about, #outcomes { grid-template-columns: 1fr; gap: 48px; padding: 80px 48px; }
+    .floating-card { position: relative; bottom: auto; right: auto; margin-top: 16px; display: inline-block; }
+    .about-visual { display: flex; flex-direction: column; }
+
+    /* Keynotes */
+    #keynotes { padding: 80px 48px; }
+    .keynotes-grid { grid-template-columns: 1fr 1fr; }
+    .section-header { margin-bottom: 48px; }
+
+    /* Testimonials */
+    #testimonials { padding: 80px 48px; }
+    .testimonials-track { grid-template-columns: 1fr; gap: 20px; }
+    .testimonial-card.featured { grid-column: 1; }
+
+    /* CTA */
+    #cta { padding: 80px 48px; }
+
+    /* Footer */
+    footer { padding: 40px 48px; gap: 24px; }
+    .footer-links { gap: 20px; }
+  }
+
+  /* ── MOBILE: ≤640px ── */
+  @media (max-width: 640px) {
+    /* Nav */
+    nav {
+      padding: 14px 20px;
+      justify-content: space-between;
+    }
+    .nav-links { display: none; }
+
+    /* Hero — single column, photo below text */
+    #hero {
+      grid-template-columns: 1fr !important;
+      min-height: auto;
+    }
+    .hero-right {
+      display: block !important;
+      height: 260px;
+      min-height: unset;
+    }
+    .hero-photo-wrap {
+      height: 260px !important;
+      min-height: unset !important;
+    }
+    .hero-quote-card { display: none; }
+    .hero-left {
+      padding: 80px 24px 48px;
+    }
+    .hero-tag { font-size: 0.6rem; margin-bottom: 20px; }
+    .hero-headline { font-size: clamp(2.2rem, 10vw, 3rem); margin-bottom: 24px; }
+    .hero-sub { font-size: 0.95rem; margin-bottom: 36px; max-width: 100%; }
+    .hero-buttons {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .btn-primary, .btn-ghost {
+      padding: 14px 28px;
+      font-size: 0.7rem;
+      width: 100%;
+      text-align: center;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 40px;
+      padding-top: 28px;
+    }
+    .stat-num { font-size: 1.8rem; }
+    .stat-label { font-size: 0.6rem; }
+
+    /* Press */
+    #press {
+      padding: 20px 24px;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+    .press-items {
+      gap: 14px;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .press-item { font-size: 0.85rem; }
+
+    /* About */
+    #about {
+      padding: 60px 24px;
+      gap: 40px;
+      grid-template-columns: 1fr;
+    }
+    .about-headline { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+    .about-body { font-size: 0.95rem; }
+    .about-badges { gap: 8px; }
+    .badge { font-size: 0.65rem; padding: 7px 14px; }
+    .about-card-main { padding: 32px 28px; border-radius: 18px; }
+    .about-card-quote { font-size: 1.25rem; }
+    .floating-card {
+      position: relative;
+      bottom: auto; right: auto;
+      margin-top: 16px;
+      display: inline-block;
+    }
+
+    /* Keynotes */
+    #keynotes { padding: 60px 24px; }
+    .section-header { margin-bottom: 36px; }
+    .section-title { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+    .keynotes-grid { grid-template-columns: 1fr; gap: 16px; }
+    .keynote-card { padding: 28px 24px; border-radius: 16px; }
+    .keynote-num { font-size: 2.5rem; margin-bottom: 10px; }
+    .keynote-title { font-size: 1.2rem; }
+    .keynote-desc { font-size: 0.85rem; }
+
+    /* Outcomes / Coaching */
+    #outcomes {
+      padding: 60px 24px;
+      gap: 40px;
+      grid-template-columns: 1fr;
+    }
+    .about-headline { font-size: clamp(1.8rem, 7vw, 2.4rem); }
+    .outcomes-list { gap: 12px; margin-top: 28px; }
+    .outcome-item { padding: 16px 18px; }
+    .outcome-text { font-size: 0.88rem; }
+    .outcomes-visual { padding: 36px 28px; border-radius: 18px; }
+    .outcomes-visual-title { font-size: 1.6rem; margin-bottom: 24px; }
+    .outcomes-grid-inner { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .outcome-mini { padding: 16px 14px; border-radius: 10px; }
+    .outcome-mini-text { font-size: 0.78rem; }
+
+    /* Testimonials */
+    #testimonials { padding: 60px 24px; }
+    .testimonials-track { grid-template-columns: 1fr; gap: 16px; }
+    .testimonial-card { padding: 28px 24px; border-radius: 16px; }
+    .testimonial-card.featured { grid-column: 1; }
+    .t-text { font-size: 1rem; }
+
+    /* CTA */
+    #cta { padding: 72px 24px; }
+    .cta-headline { font-size: clamp(2rem, 9vw, 3rem); }
+    .cta-sub { font-size: 0.95rem; margin-bottom: 36px; }
+    .cta-buttons {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .btn-gold, .btn-outline-cream {
+      padding: 16px 36px;
+      width: 100%;
+      max-width: 320px;
+      text-align: center;
+    }
+
+    /* Footer */
+    footer {
+      padding: 36px 24px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .footer-links {
+      flex-wrap: wrap;
+      gap: 16px 24px;
+    }
+  }
+
+  /* ── HERO PHOTO ── */
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-photo-wrap { position: relative; width: 100%; height: 100%; min-height: 100vh; }
+  .hero-photo {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .hero-photo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(15,37,53,0.15) 0%,
+      rgba(15,37,53,0.0) 40%,
+      rgba(15,37,53,0.55) 100%
+    );
+  }
+  .hero-quote-card {
+    position: absolute;
+    bottom: 48px; left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 64px);
+    max-width: 360px;
+    background: rgba(250,248,244,0.96);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: 0 20px 60px rgba(26,58,74,0.18);
+    text-align: center;
+    z-index: 2;
+  }
+
+  /* ── ABOUT PHOTO ── */
+  .about-photo-wrap {
+    position: relative;
+  }
+  .about-photo {
+    width: 100%;
+    border-radius: 24px;
+    display: block;
+    object-fit: cover;
+    object-position: center 20%;
+    max-height: 580px;
+    box-shadow: 0 24px 60px rgba(26,58,74,0.14);
+  }
+  .about-photo-card {
+    position: absolute;
+    bottom: -20px; left: -20px;
+    background: var(--ocean-deep);
+    border-radius: 16px;
+    padding: 24px 28px;
+    max-width: 280px;
+    box-shadow: 0 16px 40px rgba(15,37,53,0.25);
+    z-index: 2;
+  }
+  .about-photo-card .about-card-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .about-photo-card .about-card-quote::before {
+    content: '"';
+    font-size: 2rem;
+    color: var(--gold);
+    line-height: 0;
+    vertical-align: -0.6rem;
+    margin-right: 3px;
+  }
+  .about-photo-card .about-card-name {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    font-weight: 500;
+  }
+  .about-photo-wrap .floating-card {
+    position: absolute;
+    top: 24px; right: -20px;
+    z-index: 2;
+  }
+
+  /* ── KEYNOTES STAGE PHOTO ── */
+  .keynotes-stage-photo {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    height: 320px;
+  }
+  .keynotes-stage-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 65%;
+    display: block;
+  }
+  .keynotes-stage-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,37,53,0.65) 0%, rgba(15,37,53,0.1) 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 24px 32px;
+  }
+  .keynotes-stage-caption {
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(212,230,223,0.7);
+  }
+
+  /* ── TESTIMONIALS PHOTO BG ── */
+  #testimonials { position: relative; overflow: hidden; }
+  .testimonials-bg {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center 30%;
+    filter: grayscale(30%);
+    opacity: 0.12;
+  }
+  .testimonials-content {
+    position: relative;
+    z-index: 1;
+    padding: 120px 72px;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonials-content { padding: 80px 48px; }
+    .keynotes-stage-photo { height: 240px; }
+    .about-photo { max-height: 460px; }
+    .about-photo-card { left: 0; bottom: -16px; max-width: 240px; padding: 18px 20px; }
+    .about-photo-wrap .floating-card { right: 0; top: 16px; }
+  }
+
+  .nav-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px;
+    z-index: 200;
+  }
+  .nav-hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--ocean);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  @media (max-width: 640px) {
+    .nav-hamburger { display: flex; }
+  }
+
+  /* ── MOBILE DRAWER ── */
+  .mobile-drawer {
+    position: fixed;
+    top: 0; right: 0;
+    width: min(300px, 85vw);
+    height: 100vh;
+    background: var(--cream);
+    z-index: 300;
+    padding: 72px 40px 48px;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(110%);
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: -20px 0 60px rgba(26,58,74,0.15);
+  }
+  .mobile-drawer.open { transform: translateX(0); }
+  .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .drawer-link {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 400;
+    color: var(--text-mid);
+    text-decoration: none;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(122,158,142,0.15);
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+  }
+  .drawer-link:hover { color: var(--ocean); }
+  .drawer-cta {
+    margin-top: 16px;
+    background: var(--ocean);
+    color: var(--cream) !important;
+    text-align: center;
+    padding: 16px 24px;
+    border-radius: 40px;
+    border-bottom: none;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+  .drawer-close {
+    position: absolute;
+    top: 20px; right: 20px;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    color: var(--text-mid);
+    cursor: pointer;
+    padding: 8px;
+    line-height: 1;
+    transition: color 0.2s;
+  }
+  .drawer-close:hover { color: var(--ocean); }
+  .drawer-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(15,37,53,0.45);
+    backdrop-filter: blur(2px);
+    z-index: 250;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Tress<span>Larson</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#keynotes">Speaking</a></li>
+    <li><a href="#outcomes">Coaching</a></li>
+    <li><a href="#testimonials">Impact</a></li>
+    <li><a href="#cta" class="nav-cta">Book Tress</a></li>
+  </ul>
+  <button class="nav-hamburger" id="navToggle" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE DRAWER -->
+<div class="mobile-drawer" id="mobileDrawer">
+  <button class="drawer-close" id="drawerClose" aria-label="Close menu">&#10005;</button>
+  <ul>
+    <li><a href="#about" class="drawer-link">About</a></li>
+    <li><a href="#keynotes" class="drawer-link">Speaking</a></li>
+    <li><a href="#outcomes" class="drawer-link">Coaching</a></li>
+    <li><a href="#testimonials" class="drawer-link">Impact</a></li>
+    <li><a href="#cta" class="drawer-link drawer-cta">Book Tress</a></li>
+  </ul>
+</div>
+<div class="drawer-overlay" id="drawerOverlay"></div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-tag">International Speaker &amp; Leadership Coach</p>
+    <h1 class="hero-headline">
+      You are allowed to be<br>
+      <em>deeply ambitious</em><br>
+      and deeply fulfilled.
+    </h1>
+    <p class="hero-sub">
+      Tress Larson helps high-achieving women in beauty, fashion, and beyond reclaim their identity, lead with clarity, and build success that actually feels good.
+    </p>
+    <div class="hero-buttons">
+      <a href="#cta" class="btn-primary">Book a Keynote</a>
+      <a href="#about" class="btn-ghost">Her Story</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <div class="stat-num">7</div>
+        <div class="stat-label">Countries</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">6K+</div>
+        <div class="stat-label">Professionals Trained</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-num">20+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-photo-wrap">
+      <img src="tress-1.jpeg" alt="Tress Larson speaking on stage" class="hero-photo">
+      <div class="hero-photo-overlay"></div>
+      <div class="hero-quote-card">
+        <span class="quote-mark">"</span>
+        <p class="hero-quote-text">The most powerful success comes when women stop trying to prove their worth and start building lives that reflect it.</p>
+        <p class="hero-quote-attr">— Tress Larson</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRESS / AS FEATURED IN -->
+<div id="press">
+  <span class="press-label">Stages &amp; Platforms</span>
+  <div class="press-items">
+    <span class="press-item">International Speaker</span>
+    <span class="press-item">Global Education Director</span>
+    <span class="press-item">Creative Director</span>
+    <span class="press-item">80K+ Instagram</span>
+    <span class="press-item">7 Countries</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-content reveal">
+    <p class="about-label">Who She Is</p>
+    <h2 class="about-headline">Two decades of turning <em>pressure into purpose</em></h2>
+    <p class="about-body">
+      Tress Larson began her career behind a salon chair at sixteen and spent over twenty years learning what truly drives success — not technique or hustle, but identity, presence, and the courage to lead from a place of deep self-worth.
+    </p>
+    <p class="about-body">
+      Her path hasn't been without darkness. She's navigated abuse, struggled with body image, and fought her way back to clarity and faith. That journey is precisely what makes her work so transformative — she's not speaking from theory, but from a life rebuilt with intention.
+    </p>
+    <p class="about-body">
+      Today, as a Global Education Director, Creative Director, and international keynote speaker, Tress helps ambitious women stop trading their peace for performance — and start building lives and businesses that feel as good as they look.
+    </p>
+    <div class="about-badges">
+      <span class="badge">Keynote Speaker</span>
+      <span class="badge">Leadership Coach</span>
+      <span class="badge">Beauty Industry</span>
+      <span class="badge">Sales Strategist</span>
+    </div>
+  </div>
+
+  <div class="about-visual reveal">
+    <div class="about-photo-wrap">
+      <img src="tress-3.jpeg" alt="Tress Larson" class="about-photo">
+      <div class="about-photo-card">
+        <p class="about-card-quote">
+          Her sessions don't just inspire — they create a measurable shift in the room that lasts long after the event ends.
+        </p>
+        <p class="about-card-name">— Event Host Testimonial</p>
+      </div>
+      <div class="floating-card">
+        <div class="floating-num">80K+</div>
+        <div class="floating-label">Organic Instagram Followers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- KEYNOTES -->
+<section id="keynotes">
+  <div class="section-header reveal">
+    <span class="section-label">Speaking Topics</span>
+    <h2 class="section-title">Keynotes that <em>shift the room</em></h2>
+  </div>
+
+  <div class="keynotes-stage-photo reveal">
+    <img src="tress-4.jpeg" alt="Tress Larson on stage at the Renaissance Hotel">
+    <div class="keynotes-stage-overlay">
+      <p class="keynotes-stage-caption">Renaissance Hotel &amp; Spa · Glendale, AZ</p>
+    </div>
+  </div>
+
+  <div class="keynotes-grid">
+    <div class="keynote-card reveal">
+      <div class="keynote-num">01</div>
+      <h3 class="keynote-title">The Cost of Becoming Her</h3>
+      <p class="keynote-desc">Redefining success without losing yourself — addressing the internal narratives of perfectionism, performance, and the quiet question every high-achiever carries.</p>
+    </div>
+
+    <div class="keynote-card featured reveal">
+      <div class="keynote-num">02</div>
+      <h3 class="keynote-title">Confidence That Converts</h3>
+      <p class="keynote-desc">How self-worth directly impacts communication, leadership, and sales performance. Why confidence is a skill, not a personality trait — and how to build it.</p>
+    </div>
+
+    <div class="keynote-card reveal">
+      <div class="keynote-num">03</div>
+      <h3 class="keynote-title">Service First Leadership</h3>
+      <p class="keynote-desc">How exceptional service creates loyalty, culture, and long-term growth. Why genuine care is the most powerful sales strategy — and how to lead without burning out.</p>
+    </div>
+
+    <div class="keynote-card reveal">
+      <div class="keynote-num">04</div>
+      <h3 class="keynote-title">Sales Without the Ick</h3>
+      <p class="keynote-desc">Reframing sales as education, service, and problem-solving. Building trust-based conversations that feel human, honest, and deeply effective.</p>
+    </div>
+
+    <div class="keynote-card reveal">
+      <div class="keynote-num">05</div>
+      <h3 class="keynote-title">Breaking the Cycle</h3>
+      <p class="keynote-desc">From self-doubt and comparison to clarity and confidence. Practical frameworks to end self-sabotage and unlock the vision that's been waiting.</p>
+    </div>
+
+    <div class="keynote-card reveal">
+      <div class="keynote-num">06</div>
+      <h3 class="keynote-title">Poise, Presence & Power</h3>
+      <p class="keynote-desc">Why how you show up speaks before you do. Building executive presence and personal presentation without pretending to be someone you're not.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OUTCOMES / COACHING -->
+<section id="outcomes">
+  <div class="reveal">
+    <p class="about-label">High-Impact Coaching</p>
+    <h2 class="about-headline">For women who are successful on paper but <em>exhausted underneath</em></h2>
+    <p class="about-body">
+      Tress's coaching practice is built for high-achieving women in beauty, fashion, and beyond — women who are fully booked yet financially stressed, who love their craft but feel trapped in a cycle of more, more, more.
+    </p>
+    <ul class="outcomes-list">
+      <li class="outcome-item">
+        <div class="outcome-dot"></div>
+        <span class="outcome-text">Reframe success beyond performance, perfection, and external validation</span>
+      </li>
+      <li class="outcome-item">
+        <div class="outcome-dot"></div>
+        <span class="outcome-text">Break cycles of self-sabotage, comparison, and burnout for good</span>
+      </li>
+      <li class="outcome-item">
+        <div class="outcome-dot"></div>
+        <span class="outcome-text">Build confidence rooted in identity — not achievement or approval</span>
+      </li>
+      <li class="outcome-item">
+        <div class="outcome-dot"></div>
+        <span class="outcome-text">Create a business that supports your life instead of consuming it</span>
+      </li>
+      <li class="outcome-item">
+        <div class="outcome-dot"></div>
+        <span class="outcome-text">Walk away with practical tools for immediate, lasting application</span>
+      </li>
+    </ul>
+  </div>
+
+  <div class="outcomes-visual reveal">
+    <h3 class="outcomes-visual-title">
+      Ambition and <em>fulfillment</em> are not opposites.
+    </h3>
+    <div class="outcomes-grid-inner">
+      <div class="outcome-mini">
+        <div class="outcome-mini-icon">🌿</div>
+        <div class="outcome-mini-text">1:1 Coaching<br>Personalized &amp; Virtual</div>
+      </div>
+      <div class="outcome-mini">
+        <div class="outcome-mini-icon">✨</div>
+        <div class="outcome-mini-text">Private Retreats<br>Immersive Experiences</div>
+      </div>
+      <div class="outcome-mini">
+        <div class="outcome-mini-icon">🎙</div>
+        <div class="outcome-mini-text">Keynote Speaking<br>7 Countries &amp; Growing</div>
+      </div>
+      <div class="outcome-mini">
+        <div class="outcome-mini-icon">🌊</div>
+        <div class="outcome-mini-text">Masterclasses<br>Business &amp; Balance</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-bg" style="background-image: url('tress-2.jpeg')"></div>
+  <div class="testimonials-content">
+  <div class="section-header reveal">
+    <span class="section-label">The Impact</span>
+    <h2 class="section-title">What the room <em>says after</em></h2>
+  </div>
+
+  <div class="testimonials-track">
+    <div class="testimonial-card reveal">
+      <span class="t-quote">"</span>
+      <p class="t-text">I walked in thinking I needed better strategies. I walked out realizing I needed to stop making myself small. Tress didn't just motivate me — she helped me see myself differently.</p>
+      <div class="t-name">Beauty Studio Owner</div>
+      <div class="t-role">Los Angeles, CA</div>
+    </div>
+
+    <div class="testimonial-card featured reveal">
+      <span class="t-quote">"</span>
+      <p class="t-text">Her keynotes are immersive, perspective-shifting experiences. Audiences leave not just inspired, but fundamentally changed — equipped with both the clarity and tools to move forward differently.</p>
+      <div class="t-name">Event Host</div>
+      <div class="t-role">Women's Leadership Conference</div>
+    </div>
+
+    <div class="testimonial-card reveal">
+      <span class="t-quote">"</span>
+      <p class="t-text">I had been telling myself 'just one more push' for years. Tress helped me see the pattern, name it, and finally break it. My business and my life are both better for it.</p>
+      <div class="t-name">Master Stylist &amp; Educator</div>
+      <div class="t-role">International Attendee</div>
+    </div>
+  </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <span class="cta-label">Ready to Work Together?</span>
+  <h2 class="cta-headline">
+    Let's bring your<br>
+    <em>next event to life</em>
+  </h2>
+  <p class="cta-sub">
+    Whether you're booking a keynote, exploring coaching, or planning a transformational retreat — Tress would love to hear from you.
+  </p>
+  <div class="cta-buttons">
+    <a href="/cdn-cgi/l/email-protection#f39b969f9f9cb387819680809f9281809c9ddd909c9e" class="btn-gold">Book a Keynote</a>
+    <a href="https://www.instagram.com/tresslarson" target="_blank" class="btn-outline-cream">Follow on Instagram</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#" class="footer-logo">Tress<span>Larson</span></a>
+  <ul class="footer-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#keynotes">Speaking</a></li>
+    <li><a href="#outcomes">Coaching</a></li>
+    <li><a href="#cta">Contact</a></li>
+  </ul>
+  <a href="https://www.instagram.com/tresslarson" target="_blank" class="footer-ig">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+      <circle cx="12" cy="12" r="4"/>
+      <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+    </svg>
+    @tresslarson
+  </a>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // Mobile drawer
+  const toggle = document.getElementById('navToggle');
+  const drawer = document.getElementById('mobileDrawer');
+  const overlay = document.getElementById('drawerOverlay');
+  const closeBtn = document.getElementById('drawerClose');
+
+  function openDrawer() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  if (toggle) toggle.addEventListener('click', openDrawer);
+  if (closeBtn) closeBtn.addEventListener('click', closeDrawer);
+  if (overlay) overlay.addEventListener('click', closeDrawer);
+
+  // Close drawer when a link is tapped
+  document.querySelectorAll('.drawer-link').forEach(link => {
+    link.addEventListener('click', closeDrawer);
+  });
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const isMobile = window.innerWidth <= 640;
+
+  if (isMobile) {
+    // On mobile, skip animation entirely — show everything immediately
+    reveals.forEach(el => el.classList.add('visible'));
+  } else {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+          }, 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+    reveals.forEach(el => observer.observe(el));
+  }
+
+  // Stagger children in grids
+  document.querySelectorAll('.keynotes-grid, .testimonials-track').forEach(grid => {
+    if (!isMobile) {
+      grid.querySelectorAll('.reveal').forEach((el, i) => {
+        el.style.transitionDelay = `${i * 0.08}s`;
+      });
+    }
+  });
+</script>
+</body>
+</html>
