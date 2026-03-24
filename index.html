@@ -2,8 +2,6 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tress Larson — International Speaker & Leadership Coach</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -949,9 +947,9 @@
     .nav-links li:not(:last-child):nth-child(n+3) { display: none; } /* hide middle links, keep CTA */
 
     /* Hero */
-    #hero { grid-template-columns: 1fr; min-height: auto; }
-    .hero-right { display: none; }
-    .hero-left { padding: 110px 48px 72px; }
+    #hero { grid-template-columns: 1fr 1fr; min-height: auto; }
+    .hero-right { display: block; min-height: 500px; }
+    .hero-left { padding: 110px 40px 72px; }
     .hero-headline { font-size: clamp(2.8rem, 6vw, 4rem); }
     .hero-stats { gap: 28px; margin-top: 48px; padding-top: 32px; }
 
@@ -983,16 +981,30 @@
 
   /* ── MOBILE: ≤640px ── */
   @media (max-width: 640px) {
-    /* Nav — logo + CTA button only */
+    /* Nav */
     nav {
       padding: 14px 20px;
       justify-content: space-between;
     }
     .nav-links { display: none; }
 
-    /* Hero */
+    /* Hero — single column, photo below text */
+    #hero {
+      grid-template-columns: 1fr !important;
+      min-height: auto;
+    }
+    .hero-right {
+      display: block !important;
+      height: 260px;
+      min-height: unset;
+    }
+    .hero-photo-wrap {
+      height: 260px !important;
+      min-height: unset !important;
+    }
+    .hero-quote-card { display: none; }
     .hero-left {
-      padding: 88px 24px 60px;
+      padding: 80px 24px 48px;
     }
     .hero-tag { font-size: 0.6rem; margin-bottom: 20px; }
     .hero-headline { font-size: clamp(2.2rem, 10vw, 3rem); margin-bottom: 24px; }
@@ -1113,7 +1125,144 @@
     }
   }
 
-  /* ── HAMBURGER BUTTON ── */
+  /* ── HERO PHOTO ── */
+  .hero-right { position: relative; overflow: hidden; }
+  .hero-photo-wrap { position: relative; width: 100%; height: 100%; min-height: 100vh; }
+  .hero-photo {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    display: block;
+  }
+  .hero-photo-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(15,37,53,0.15) 0%,
+      rgba(15,37,53,0.0) 40%,
+      rgba(15,37,53,0.55) 100%
+    );
+  }
+  .hero-quote-card {
+    position: absolute;
+    bottom: 48px; left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 64px);
+    max-width: 360px;
+    background: rgba(250,248,244,0.96);
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    padding: 28px 32px;
+    box-shadow: 0 20px 60px rgba(26,58,74,0.18);
+    text-align: center;
+    z-index: 2;
+  }
+
+  /* ── ABOUT PHOTO ── */
+  .about-photo-wrap {
+    position: relative;
+  }
+  .about-photo {
+    width: 100%;
+    border-radius: 24px;
+    display: block;
+    object-fit: cover;
+    object-position: center top;
+    max-height: 580px;
+    box-shadow: 0 24px 60px rgba(26,58,74,0.14);
+  }
+  .about-photo-card {
+    position: absolute;
+    bottom: -20px; left: -20px;
+    background: var(--ocean-deep);
+    border-radius: 16px;
+    padding: 24px 28px;
+    max-width: 280px;
+    box-shadow: 0 16px 40px rgba(15,37,53,0.25);
+    z-index: 2;
+  }
+  .about-photo-card .about-card-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .about-photo-card .about-card-quote::before {
+    content: '"';
+    font-size: 2rem;
+    color: var(--gold);
+    line-height: 0;
+    vertical-align: -0.6rem;
+    margin-right: 3px;
+  }
+  .about-photo-card .about-card-name {
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--sage-light);
+    font-weight: 500;
+  }
+  .about-photo-wrap .floating-card {
+    position: absolute;
+    top: 24px; right: -20px;
+    z-index: 2;
+  }
+
+  /* ── KEYNOTES STAGE PHOTO ── */
+  .keynotes-stage-photo {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 48px;
+    height: 320px;
+  }
+  .keynotes-stage-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+    display: block;
+  }
+  .keynotes-stage-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(15,37,53,0.65) 0%, rgba(15,37,53,0.1) 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 24px 32px;
+  }
+  .keynotes-stage-caption {
+    font-size: 0.68rem;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(212,230,223,0.7);
+  }
+
+  /* ── TESTIMONIALS PHOTO BG ── */
+  #testimonials { position: relative; overflow: hidden; }
+  .testimonials-bg {
+    position: absolute; inset: 0;
+    background-size: cover;
+    background-position: center 30%;
+    filter: grayscale(30%);
+    opacity: 0.12;
+  }
+  .testimonials-content {
+    position: relative;
+    z-index: 1;
+    padding: 120px 72px;
+  }
+
+  @media (max-width: 1024px) {
+    .testimonials-content { padding: 80px 48px; }
+    .keynotes-stage-photo { height: 240px; }
+    .about-photo { max-height: 460px; }
+    .about-photo-card { left: 0; bottom: -16px; max-width: 240px; padding: 18px 20px; }
+    .about-photo-wrap .floating-card { right: 0; top: 16px; }
+  }
+
   .nav-hamburger {
     display: none;
     flex-direction: column;
@@ -1203,6 +1352,7 @@
     transition: opacity 0.35s ease;
   }
   .drawer-overlay.open { opacity: 1; pointer-events: all; }
+
 </style>
 </head>
 <body>
@@ -1268,19 +1418,9 @@
   </div>
 
   <div class="hero-right">
-    <div class="hero-photo-placeholder">
-      <div class="hero-photo-frame"></div>
-      <span class="hero-initial">T</span>
-
-      <!-- Decorative SVG waves -->
-      <svg class="hero-decor" viewBox="0 0 600 700" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="300" cy="300" r="200" fill="none" stroke="#7a9e8e" stroke-width="1"/>
-        <circle cx="300" cy="300" r="260" fill="none" stroke="#7a9e8e" stroke-width="0.5"/>
-        <circle cx="300" cy="300" r="320" fill="none" stroke="#7a9e8e" stroke-width="0.3"/>
-        <line x1="100" y1="300" x2="500" y2="300" stroke="#7a9e8e" stroke-width="0.5"/>
-        <line x1="300" y1="100" x2="300" y2="500" stroke="#7a9e8e" stroke-width="0.5"/>
-      </svg>
-
+    <div class="hero-photo-wrap">
+      <img src="tress-1.jpeg" alt="Tress Larson speaking on stage" class="hero-photo">
+      <div class="hero-photo-overlay"></div>
       <div class="hero-quote-card">
         <span class="quote-mark">"</span>
         <p class="hero-quote-text">The most powerful success comes when women stop trying to prove their worth and start building lives that reflect it.</p>
@@ -1325,15 +1465,18 @@
   </div>
 
   <div class="about-visual reveal">
-    <div class="about-card-main">
-      <p class="about-card-quote">
-        Her sessions don't just inspire — they create a measurable shift in the room that lasts long after the event ends.
-      </p>
-      <p class="about-card-name">— Event Host Testimonial</p>
-    </div>
-    <div class="floating-card">
-      <div class="floating-num">80K+</div>
-      <div class="floating-label">Organic Instagram Followers</div>
+    <div class="about-photo-wrap">
+      <img src="tress-3.jpeg" alt="Tress Larson" class="about-photo">
+      <div class="about-photo-card">
+        <p class="about-card-quote">
+          Her sessions don't just inspire — they create a measurable shift in the room that lasts long after the event ends.
+        </p>
+        <p class="about-card-name">— Event Host Testimonial</p>
+      </div>
+      <div class="floating-card">
+        <div class="floating-num">80K+</div>
+        <div class="floating-label">Organic Instagram Followers</div>
+      </div>
     </div>
   </div>
 </section>
@@ -1343,6 +1486,13 @@
   <div class="section-header reveal">
     <span class="section-label">Speaking Topics</span>
     <h2 class="section-title">Keynotes that <em>shift the room</em></h2>
+  </div>
+
+  <div class="keynotes-stage-photo reveal">
+    <img src="tress-4.jpeg" alt="Tress Larson on stage at the Renaissance Hotel">
+    <div class="keynotes-stage-overlay">
+      <p class="keynotes-stage-caption">Renaissance Hotel &amp; Spa · Glendale, AZ</p>
+    </div>
   </div>
 
   <div class="keynotes-grid">
@@ -1443,6 +1593,8 @@
 
 <!-- TESTIMONIALS -->
 <section id="testimonials">
+  <div class="testimonials-bg" style="background-image: url('tress-2.jpeg')"></div>
+  <div class="testimonials-content">
   <div class="section-header reveal">
     <span class="section-label">The Impact</span>
     <h2 class="section-title">What the room <em>says after</em></h2>
@@ -1469,6 +1621,7 @@
       <div class="t-name">Master Stylist &amp; Educator</div>
       <div class="t-role">International Attendee</div>
     </div>
+  </div>
   </div>
 </section>
 
